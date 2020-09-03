@@ -2,6 +2,15 @@
         <div class="row">
             <div class='col-1'>
                 <%= image_tag (tweet.user.photo_url), :class => "avatar-in-tweet rounded" %>
+                <% if user_signed_in? && current_user != tweet.user %>
+                    <%= link_to current_user.is_following?(tweet.user) ? "Dejar de seguir" : "Seguir", users_follow_path(tweet.user.id),
+                    class: "follow-btn",
+                    'title' => (current_user.is_following?(tweet.user) ? "Siguiendo" : "Seguir"),
+                    'data-toggle' => 'tooltip',
+                    'data-placement' => 'right',
+                    method: :post
+                %>
+                <% end %>
             </div>
             <div class="col-11">
                 <span class="username"><%= tweet.user.username%> dice:</span></br>
